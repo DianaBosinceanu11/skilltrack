@@ -1,3 +1,30 @@
-export default function New() {
-  return <h1 className="text-2xl font-semibold">Add New Skill</h1>;
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+export default function New(){
+  const [title, setTitle] = useState('')
+  const navigate = useNavigate()
+
+  function add(){
+    if(!title.trim()) return
+    // stocăm temporar în localStorage doar ca demo
+    const items = JSON.parse(localStorage.getItem('items') || '[]')
+    items.push({ id: crypto.randomUUID(), title, status: 'todo' })
+    localStorage.setItem('items', JSON.stringify(items))
+    navigate('/') // mergem înapoi la List
+  }
+
+  return (
+    <div className="space-y-3">
+      <input
+        value={title}
+        onChange={e=>setTitle(e.target.value)}
+        placeholder="Title"
+        className="border p-2 rounded w-full"
+      />
+      <button onClick={add} className="px-3 py-2 rounded bg-black text-white">
+        Add
+      </button>
+    </div>
+  )
 }
