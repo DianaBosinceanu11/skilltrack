@@ -23,10 +23,20 @@ export default function Item() {
     setItem(prev => ({ ...prev, status: "done" }));
   }
 
+  function deleteItem() {
+    if (!confirm("Are you sure you want to delete this item?")) return;
+    const items = JSON.parse(localStorage.getItem("items") || "[]");
+    const filtered = items.filter(i => i.id !== item.id);
+    localStorage.setItem("items", JSON.stringify(filtered));
+    navigate("/");
+  }
+
   return (
     <div className="space-y-2 ">
       <h1 className="text-2xl font-semibold">{item.title}</h1>
+
       <p>Status: {item.status}</p>
+
       <Link
       to={`/item/${id}/edit`}
       className="inline-block px-3 py-2 rounded bg-gray-200"
@@ -50,6 +60,13 @@ export default function Item() {
             Back
           </button>
       </div>
+
+      <button
+      onClick={deleteItem}
+      className="px-3 py-2 rounded bg-red-500 text-white"
+      >
+        Delete
+      </button>
     </div>
   );
 }
