@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 export default function Item() {
   const { id } = useParams();
@@ -27,6 +27,12 @@ export default function Item() {
     <div className="space-y-2 ">
       <h1 className="text-2xl font-semibold">{item.title}</h1>
       <p>Status: {item.status}</p>
+      <Link
+      to={`/item/${id}/edit`}
+      className="inline-block px-3 py-2 rounded bg-gray-200"
+      >
+        Edit
+      </Link>
       <div className="space-x-5">
         {item.status !== "done" && (
           <button
